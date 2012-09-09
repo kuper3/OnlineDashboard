@@ -12,8 +12,7 @@ import model.User
 object Application extends Controller { 
 
   def index = Action {
-    DB.getConnection("default", true)
-    val r = DB.withConnection{
+    val r = DB.withConnection("postgre"){
       implicit c =>
         SQL("select 1").execute()    
     }
