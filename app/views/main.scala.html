@@ -8,24 +8,20 @@
         <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
         <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
         <script src="@routes.Assets.at("javascripts/jquery-1.7.1.min.js")" type="text/javascript"></script>
-        <script src="@routes.Assets.at("javascripts/test.js")" type="text/javascript" ></script>
+        <script src="@routes.Assets.at("javascripts/utils.js")" type="text/javascript"></script>
+        
     </head>
-    <body>
-       <center>@content</center>
-       <script type="text/javascript">
-            document.write(list)
-       </script>
+    <body onload="init()" onresize="init()">
+        
+       <a id="loginLink" href="/login">Login</a>
+       <div id="content" align="center">@content</div>
        
-	   <script type="text/coffeescript">
-            # Some CoffeeScript
-            wordList = ["coffeescript", "Jeremy Ashkenas", "DocumentCloud", "and stuff", "jQuery"]
-            tweet = "This is an example tweet talking about javascript and stuff."
-
-            console.log wordList.some (word) -> ~tweet.indexOf word #outputs true
-	   </script>
-       <div id="center-in-bar">
-		       text
-       </div>
-       
+        <script type="text/javascript">
+         function init () {
+             setCorrectPosition("loginLink");
+             centralizeElement("content");
+         }
+        </script>
+   
     </body>
 </html>

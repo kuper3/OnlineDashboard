@@ -4,3 +4,9 @@
         left: 200px;
     
 }
+
+#loginLink {
+	position: absolute;
+	top: 1px;
+	left: 10px;
+}
