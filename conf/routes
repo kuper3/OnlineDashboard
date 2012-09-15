@@ -6,9 +6,13 @@
 GET     /            controllers.Application.index
 
 # Authentication page
-GET    /login           controllers.Login.form
-POST   /login           controllers.Login.submit
-GET    /login/fakeuser  controllers.Login.editForm
+GET    /adduser           controllers.Login.form
+POST   /adduser           controllers.Login.submit
+GET    /adduser/fakeuser  controllers.Login.editForm
+
+# Login page
+GET    /login             controllers.SignUp.login
+POST   /login             controllers.SignUp.submit
 
 # Communication page
 GET   /show            controllers.NetworkConnector.fetch

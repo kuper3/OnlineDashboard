@@ -1,0 +1,30 @@
+@(form: Form[(String, String)])
+
+@import helper._
+@import helper.twitterBootstrap._
+
+<html>
+    <head>
+        <title>Login</title> 
+    </head>
+    
+    <body> 
+         @helper.form(action = routes.SignUp.submit) {
+            
+            <h1>Sign in</h1>
+            
+            <p>
+                <input type="text" name="login" placeholder="Login" id="login">
+            </p>
+            
+            <p>
+                <input type="password" name="password" placeholder="Password" id="password">
+            </p>
+            
+            <p>
+                <button type="submit" id="loginButton">Login</button>
+               
+            </p>
+        }
+    </body>
+</html>
