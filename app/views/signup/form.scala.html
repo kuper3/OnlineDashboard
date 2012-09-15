@@ -3,10 +3,6 @@
 @import helper._
 @import helper.twitterBootstrap._
 
-@title = {
-    Sign Up <small><a href="@routes.Login.editForm">Or edit an existing user</a></small>
-}
-
 @main("Login") {
     
     @helper.form(action = routes.Login.submit) {
@@ -52,8 +48,8 @@
         </fieldset>
         
         <div class="actions">
-            <input type="submit" class="btn primary" value="Sign Up">
-            <a href="@routes.Application.index" class="btn">Cancel</a>
+            <input type="submit" value="Sign Up">
+            <a href="@routes.Application.index">Cancel</a>
         </div>
         
     }

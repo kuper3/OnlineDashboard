@@ -6,9 +6,10 @@ import play.api.db._
 import play.api.Play.current
 
 case class User(
-    username:String, 
+    var username:String, 
     password:String, 
-    email:String
+    email:String,
+    var isLoggedIn:Boolean
 )
 
 object User {
@@ -17,25 +18,21 @@ object User {
     get[String]("username") ~
       get[String]("password") ~ 
         get[String]("email") map {
-        case username ~ password ~ email => User(username, password, email)
+        case username ~ password ~ email => User(username, password, email, false)
       }
   }
   
-  def save(user: User):Boolean = {
-    DB.withConnection{
-      implicit c =>
-        SQL("select 1" + user.username).execute
-    }
-  }
-  
   def create(userName: String, password:String, email:String) {
-    DB.withConnection { implicit c =>
+    DB.withConnection("postgre") { implicit c =>
       SQL("insert into users (username, password, email) values ({userName}, {password}, {email})").on(
         'userName -> userName, 'password -> password, 'email -> email).executeUpdate()
     }
   }
   
-  def all(): List[User] = DB.withConnection { implicit c =>
+  def all: List[User] = DB.withConnection("postgre") { implicit c =>
     SQL("select * from users").as(userInsance *)
   }
+  
+  val current: User = User("","","", false)
+  
 }

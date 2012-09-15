@@ -1,8 +1,8 @@
-# users schema
+# my schema
  
 # --- !Ups
  
-CREATE TABLE if not exists users (
+CREATE TABLE IF NOT EXISTS users (
     id SERIAL,
     username varchar(255) NOT NULL,
     password varchar(255) NOT NULL,
@@ -11,4 +11,4 @@ CREATE TABLE if not exists users (
  
 # --- !Downs
  
-DROP TABLE users;
+DROP TABLE IF EXISTS users;
