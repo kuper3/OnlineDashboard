@@ -5,6 +5,7 @@ import play.api.mvc._
 import play.api.data._
 import play.api.data.Forms._
 import model._
+import controllers.signup.UserManager
 
 object SignUp extends Controller {
 
@@ -21,13 +22,15 @@ object SignUp extends Controller {
       hasErrors => Ok(views.html.index("error")),
       value => {
         registerVisitor(value._1, request.headers.get(HOST), request.headers.get(USER_AGENT))
-        val logged = isUserRegister(value._1, value._2)
-        if (!logged) {
-          Redirect(routes.Login.form)
-        } else {
-          User.current.username = value._1
-          User.current.isLoggedIn = true
-          Ok(views.html.index("Wellcome " + value._1 ))
+
+        // FIXME improve!!!
+        User.getUser(value._1, value._2) match {
+          case Some(user) => {
+            UserManager.addUser(user)
+            Ok(views.html.index("Wellcome " + user.username)).withSession(
+              "connected" -> user.username)
+          }
+          case None => Redirect(routes.Login.form)
         }
       })
   }
@@ -46,13 +49,6 @@ object SignUp extends Controller {
     }
 
     Visitor.create(name, visitorHost, visitorAgent)
-  }
-
-  private def isUserRegister(name: String, password: String): Boolean = {
-    User.all.find(user => user.username == name && user.password == password) match {
-      case Some(u) => true
-      case None => false
-    }
   }
 
 }

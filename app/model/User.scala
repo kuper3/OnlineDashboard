@@ -27,12 +27,15 @@ object User {
       SQL("insert into users (username, password, email) values ({userName}, {password}, {email})").on(
         'userName -> userName, 'password -> password, 'email -> email).executeUpdate()
     }
-  }
+  }  
+  
   
   def all: List[User] = DB.withConnection("postgre") { implicit c =>
     SQL("select * from users").as(userInsance *)
   }
   
-  val current: User = User("","","", false)
+  def getUser(name: String, password: String) = {
+    all.find(user => user.username == name && user.password == password)
+  }
   
 }
