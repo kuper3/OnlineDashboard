@@ -6,6 +6,7 @@ import play.api.data._
 import play.api.data.Forms._
 import model._
 import controllers.signup.UserManager
+import play.api.libs.ws.WS
 
 object SignUp extends Controller {
 
@@ -13,8 +14,13 @@ object SignUp extends Controller {
     tuple(
       "login" -> text,
       "password" -> nonEmptyText))
-  def login = Action {
-    Ok(views.html.signup.login(loginForm))
+  def login = Action { implicit request =>
+    session.get("connected").map {user =>
+      session - "connected"
+      Redirect(routes.Application.index)
+    }.getOrElse {
+      Ok(views.html.signup.login(loginForm)) 
+    }
   }
 
   def submit = Action { implicit request =>
@@ -27,7 +33,7 @@ object SignUp extends Controller {
         User.getUser(value._1, value._2) match {
           case Some(user) => {
             UserManager.addUser(user)
-            Ok(views.html.index("Wellcome " + user.username)).withSession(
+            Redirect(routes.Application.index).withSession(
               "connected" -> user.username)
           }
           case None => Redirect(routes.Login.form)
