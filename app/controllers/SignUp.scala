@@ -14,6 +14,8 @@ object SignUp extends Controller {
     tuple(
       "login" -> text,
       "password" -> nonEmptyText))
+
+
   def login = Action { implicit request =>
     session.get("connected").map {user =>
       session - "connected"

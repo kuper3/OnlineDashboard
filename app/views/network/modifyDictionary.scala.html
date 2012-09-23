@@ -1,0 +1,29 @@
+@(myform: Form[model.Word])
+
+@import helper._
+@import helper.twitterBootstrap._
+
+<html>
+    <head>
+        <title>Add new word</title>
+    </head>
+    <body>
+        @helper.form(action = routes.NetworkConnector.submit) {
+            
+            <h1>Add new word</h1>
+            
+            <p>
+                @helper.inputText(myform("englishWorld"), '_label -> "English world", 'placeholder -> "English world")
+            </p>
+            
+            <p>
+                 @helper.inputText(myform("translation"), '_label -> "Translation", 'placeholder -> "Translation")
+            </p>
+            
+            <p>
+                <button type="submit" id="addButton">Add</button>
+               
+            </p>
+        }
+    </body>
+</html>
