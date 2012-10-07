@@ -3,12 +3,7 @@
 @import helper._
 @import helper.twitterBootstrap._
 
-<html>
-    <head>
-        <title>Login</title> 
-    </head>
-    
-    <body> 
+@main("Login") {
          @helper.form(action = routes.SignUp.submit) {
             
             <h1>Sign in</h1>
@@ -23,8 +18,7 @@
             
             <p>
                 <button type="submit" id="loginButton">Login</button>
-               
+                <a href="@routes.Application.index">Cancel</a>
             </p>
         }
-    </body>
-</html>
+}

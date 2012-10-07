@@ -4,11 +4,11 @@
 
 # Home page
 GET     /            controllers.Application.index
+POST    /            controllers.Application.login
 
 # Authentication page
 GET    /adduser           controllers.Login.form
 POST   /adduser           controllers.Login.submit
-GET    /adduser/fakeuser  controllers.Login.editForm
 
 # Login page
 GET    /login             controllers.SignUp.login
@@ -16,6 +16,7 @@ POST   /login             controllers.SignUp.submit
 
 # Communication page
 GET   /show            controllers.NetworkConnector.fetch
+POST  /show            controllers.Application.login
 GET   /add             controllers.NetworkConnector.add
 POST  /add             controllers.NetworkConnector.submit
 

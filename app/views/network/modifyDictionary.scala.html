@@ -1,13 +1,9 @@
-@(myform: Form[model.Word])
+@(myform: Form[model.Word], userName:String)
 
 @import helper._
 @import helper.twitterBootstrap._
 
-<html>
-    <head>
-        <title>Add new word</title>
-    </head>
-    <body>
+@main("Add new word", userName) {
         @helper.form(action = routes.NetworkConnector.submit) {
             
             <h1>Add new word</h1>
@@ -25,5 +21,4 @@
                
             </p>
         }
-    </body>
-</html>
+}

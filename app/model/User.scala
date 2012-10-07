@@ -6,26 +6,23 @@ import play.api.db._
 import play.api.Play.current
 
 case class User(
-    var username:String, 
-    password:String, 
-    email:String,
-    var isLoggedIn:Boolean
+    val username:String, 
+    val password:String
 )
 
 object User {
   
   val userInsance = {
     get[String]("username") ~
-      get[String]("password") ~ 
-        get[String]("email") map {
-        case username ~ password ~ email => User(username, password, email, false)
+      get[String]("password") map {
+        case username ~ password => User(username, password)
       }
   }
   
-  def create(userName: String, password:String, email:String) {
+  def create(userName: String, password:String) {
     DB.withConnection("postgre") { implicit c =>
-      SQL("insert into users (username, password, email) values ({userName}, {password}, {email})").on(
-        'userName -> userName, 'password -> password, 'email -> email).executeUpdate()
+      SQL("insert into users (username, password) values ({userName}, {password})").on(
+        'userName -> userName, 'password -> password).executeUpdate()
     }
   }  
   

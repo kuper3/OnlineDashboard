@@ -34,11 +34,12 @@ object SignUp extends Controller {
         // FIXME improve!!!
         User.getUser(value._1, value._2) match {
           case Some(user) => {
-            UserManager.addUser(user)
+            //UserManager.addUser(user)
             Redirect(routes.Application.index).withSession(
               "connected" -> user.username)
           }
-          case None => Redirect(routes.Login.form)
+          case None => Unauthorized
+            /*Redirect(routes.Login.form)*/
         }
       })
   }

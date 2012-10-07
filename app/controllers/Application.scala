@@ -5,20 +5,20 @@ import views.html.index
 
 object Application extends Controller {
 
-  def index = Action {  implicit request =>
+  def index = Action { implicit request =>
     session.get("connected").map { user =>
       Redirect(routes.NetworkConnector.fetch)
     }.getOrElse {
       Ok(views.html.index("Hello!"))
     }
-   
+
   }
 
-  def loggedIn = Action { implicit request =>
+  def login = Action { implicit request =>
     session.get("connected").map { user =>
-      Ok("Hello " + user)
+      Redirect(routes.Application.index).withSession(session - "connected")
     }.getOrElse {
-      Unauthorized("Oops, you are not connected")
+      Redirect(routes.SignUp.login)
     }
   }
 

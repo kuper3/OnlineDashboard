@@ -1,27 +1,24 @@
-@(title: String)(content: Html)
+@(title: String, userName: String = "Stranger")(content: Html)
 
 <!DOCTYPE html>
 
 <html>
     <head>
         <title>@title</title>
-        <!--link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")"-->
+        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
         <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
         <script src="@routes.Assets.at("javascripts/jquery-1.7.1.min.js")" type="text/javascript"></script>
         <script src="@routes.Assets.at("javascripts/utils.js")" type="text/javascript"></script>
         
     </head>
-    <body onload="init()" onresize="init()">
+    <body onload="initForm()" onresize="init()">
         
-       <a id="loginLink" href="/login">LogIn/LogOut</a>
-       <div id="content" align="center">@content</div>
+       <form name="mainForm" method="post">
+            <label id="userNameLabel" >Hello, @userName!</label>
+            <a id="loginLink" href="javascript:click(loginLink)">LogIn/LogOut</a>
+            <a id="addUserLink" href="/adduser">Create Account</a>
+            <div id="content" align="center">@content</div>
+       </form> 
        
-        <script type="text/javascript">
-         function init () {
-             setCorrectPosition("loginLink");
-             centralizeElement("content");
-         }
-        </script>
-
     </body>
 </html>
