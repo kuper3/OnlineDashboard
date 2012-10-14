@@ -12,7 +12,11 @@ import views.html.defaultpages.unauthorized
 
 object NetworkConnector extends Controller {
   
-  private val host = "http://localhost:8080/"
+  /**
+   * prod : "http://safe-earth-1849.herokuapp.com/"
+   * dev:   "http://localhost:8080/"
+   */
+  private val host = "http://safe-earth-1849.herokuapp.com/"
 
   val wordForm :Form[Word] = Form(
     mapping(
