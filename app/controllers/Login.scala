@@ -37,7 +37,8 @@ object Login extends Controller {
   
   def submit = Action { implicit request =>
     signupForm.bindFromRequest.fold(
-      errors => BadRequest(views.html.signup.form(errors)),
+        /*views.html.signup.form(errors)*/
+      errors => BadRequest("Invalid credentials!"),
       
       user => {
         User.create(user.username, user.password)

@@ -38,7 +38,7 @@ object SignUp extends Controller {
             Redirect(routes.Application.index).withSession(
               "connected" -> user.username)
           }
-          case None => Unauthorized
+          case None => Unauthorized("Invalid credentials!")
             /*Redirect(routes.Login.form)*/
         }
       })
