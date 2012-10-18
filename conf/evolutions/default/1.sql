@@ -1,14 +1,13 @@
 # users schema
  
 # --- !Ups
- 
-CREATE TABLE if not exists users (
-     id bigint(20) NOT NULL AUTO_INCREMENT,
+
+CREATE TABLE IF NOT EXISTS users (
+    id SERIAL,
     username varchar(255) NOT NULL,
-    password varchar(255) NOT NULL,
-    email varchar(255) NOT NULL
+    password varchar(255) NOT NULL
 );
- 
+
 # --- !Downs
- 
-DROP TABLE users;
+
+DROP TABLE IF EXISTS users;
