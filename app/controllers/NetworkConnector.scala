@@ -64,6 +64,7 @@ object NetworkConnector extends Controller {
         val result: Promise[play.api.libs.ws.Response] = {
           WS.url(url).get
         }
+        result.await(10000)
         Ok(result.value.get.body)
         /*Async {
           WS.url(url).get.map { response =>
