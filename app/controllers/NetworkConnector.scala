@@ -8,6 +8,7 @@ import play.api.libs.ws._
 import play.api.mvc._
 import play.api.templates.Html
 import views.html.defaultpages.unauthorized
+import play.api.libs.concurrent.Promise
 
 
 object NetworkConnector extends Controller {
@@ -31,13 +32,17 @@ object NetworkConnector extends Controller {
   )
 
   def fetch = Action { implicit request =>
-    session.get("connected").map {user =>
-    val url = host + "random"
-    Async {
-      WS.url(url).get().map { response =>
-        Ok(views.html.main("Word", user)(Html(response.body)))
+    session.get("connected").map { user =>
+      val url = host + "random"
+      //    Async {
+      //      WS.url(url).get().map { response =>
+      //        Ok(views.html.main("Word", user)(Html(response.body)))
+      //      }
+      //    }
+      val result: Promise[play.api.libs.ws.Response] = {
+        WS.url(url).get
       }
-    }
+      Ok(views.html.main("Word", user)(Html(result.value.get.body)))
     }.getOrElse {
       Unauthorized("You are unauthorized!")
     }
@@ -55,15 +60,17 @@ object NetworkConnector extends Controller {
     wordForm.bindFromRequest.fold(
       hasErrors => BadRequest,
       word => {
-        val url = host + "add?e=%1$s&t=%2$s".format(word.englishWord,word.translation)
-        Async {
+        val url = host + "add?e=%1$s&t=%2$s".format(word.englishWord, word.translation)
+        val result: Promise[play.api.libs.ws.Response] = {
+          WS.url(url).get
+        }
+        Ok(result.value.get.body)
+        /*Async {
           WS.url(url).get.map { response =>
             Ok(response.body)
           }
-        }        
-      }
-    )
-
+        } */
+      })
   }
 
 }
