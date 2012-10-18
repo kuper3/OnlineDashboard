@@ -17,13 +17,13 @@ object Visitor {
   }
   
   def create(name:String, host:String, user_agent: String) {
-    DB.withConnection("postgre") { implicit c =>
+    DB.withConnection(Constants.db) { implicit c =>
       SQL("insert into visitors (name, host, user_agent) values ({name}, {host}, {user_agent})").on(
         'name -> name, 'host -> host, 'user_agent -> user_agent).executeUpdate()
     }
   }
   
-  def all: List[Visitor] = DB.withConnection("postgre") { implicit c =>
+  def all: List[Visitor] = DB.withConnection(Constants.db) { implicit c =>
     SQL("select * from visitors").as(visitorInsance *)
   }
 }

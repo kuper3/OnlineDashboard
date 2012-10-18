@@ -11,6 +11,10 @@ project/plugins/project/
 
 # IDE specific
 .settings
+.cache
+.target/
 .scala_dependencies
 .classpath
 .project
+.idea/
+.idea_modules/
