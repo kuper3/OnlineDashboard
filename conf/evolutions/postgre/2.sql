@@ -4,7 +4,7 @@
 CREATE TABLE IF NOT EXISTS visitors (
     id SERIAL,
     name varchar(100),
-    host varchar(25) NOT NULL,
+    host varchar(255) NOT NULL,
     user_agent varchar(100) NOT NULL,
     added TIMESTAMP
 );
