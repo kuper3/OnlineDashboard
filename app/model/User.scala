@@ -20,14 +20,14 @@ object User {
   }
   
   def create(userName: String, password:String) {
-    DB.withConnection("postgre") { implicit c =>
+    DB.withConnection(Constants.db) { implicit c =>
       SQL("insert into users (username, password) values ({userName}, {password})").on(
         'userName -> userName, 'password -> password).executeUpdate()
     }
   }  
   
   
-  def all: List[User] = DB.withConnection("postgre") { implicit c =>
+  def all: List[User] = DB.withConnection(Constants.db) { implicit c =>
     SQL("select * from users").as(userInsance *)
   }
   
