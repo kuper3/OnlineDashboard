@@ -20,5 +20,8 @@ POST  /show            controllers.Application.login
 GET   /add             controllers.NetworkConnector.add
 POST  /add             controllers.NetworkConnector.submit
 
+# Administration page
+GET /visitors        controllers.Administration.showVisitors
+
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

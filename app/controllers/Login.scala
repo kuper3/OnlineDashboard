@@ -7,6 +7,7 @@ import play.api.data.Forms._
 import views._
 import model.User
 import views.html.index
+import controllers.signup.UserManager
 
 
 object Login extends Controller {
@@ -41,9 +42,10 @@ object Login extends Controller {
       errors => BadRequest("Invalid credentials!"),
       
       user => {
+        UserManager.addUser(user)
         User.create(user.username, user.password)
         Redirect(routes.Application.index).withSession(
-              "connected" -> user.username)
+              UserManager.SESSION_ID -> user.username)
       }
     )
   }

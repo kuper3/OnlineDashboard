@@ -5,10 +5,12 @@ import anorm.SqlParser._
 import play.api.db._
 import play.api.Play.current
 
-case class Visitor(name:String, host:String, user_agent: String)
+case class Visitor(name:String, host:String, user_agent: String) {
+  override def toString = name + "," + host + "," + user_agent + ";"
+}
 
 object Visitor {
-  val visitorInsance = {
+  val visitorInstance = {
     get[String]("name") ~
         get[String]("host") ~ 
           get[String]("user_agent") map {
@@ -17,13 +19,13 @@ object Visitor {
   }
   
   def create(name:String, host:String, user_agent: String) {
-    DB.withConnection(Constants.db) { implicit c =>
+    DB.withConnection { implicit c =>
       SQL("insert into visitors (name, host, user_agent) values ({name}, {host}, {user_agent})").on(
         'name -> name, 'host -> host, 'user_agent -> user_agent).executeUpdate()
     }
   }
   
-  def all: List[Visitor] = DB.withConnection(Constants.db) { implicit c =>
-    SQL("select * from visitors").as(visitorInsance *)
+  def all: List[Visitor] = DB.withConnection { implicit c =>
+    SQL("select * from visitors").as(visitorInstance *)
   }
 }

@@ -8,6 +8,7 @@ import model._
 import controllers.signup.UserManager
 import play.api.libs.ws.WS
 
+
 object SignUp extends Controller {
 
   val loginForm = Form(
@@ -17,9 +18,8 @@ object SignUp extends Controller {
 
 
   def login = Action { implicit request =>
-    session.get("connected").map {user =>
-      session - "connected"
-      Redirect(routes.Application.index)
+    session.get(UserManager.SESSION_ID).map {user =>
+      Redirect(routes.Application.index).withSession(session - UserManager.SESSION_ID)
     }.getOrElse {
       Ok(views.html.signup.login(loginForm)) 
     }
@@ -34,9 +34,9 @@ object SignUp extends Controller {
         // FIXME improve!!!
         User.getUser(value._1, value._2) match {
           case Some(user) => {
-            //UserManager.addUser(user)
+            UserManager.addUser(user)
             Redirect(routes.Application.index).withSession(
-              "connected" -> user.username)
+              UserManager.SESSION_ID -> user.username)
           }
           case None => Unauthorized("Invalid credentials!")
             /*Redirect(routes.Login.form)*/

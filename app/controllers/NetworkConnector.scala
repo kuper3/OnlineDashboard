@@ -1,14 +1,15 @@
 package controllers
 
 import model._
-import play.api._
+//import play.api._
 import play.api.data._
 import play.api.data.Forms._
 import play.api.libs.ws._
 import play.api.mvc._
 import play.api.templates.Html
-import views.html.defaultpages.unauthorized
+//import views.html.defaultpages.unauthorized
 import play.api.libs.concurrent.Promise
+import controllers.signup.UserManager
 
 
 object NetworkConnector extends Controller {
@@ -32,7 +33,7 @@ object NetworkConnector extends Controller {
   )
 
   def fetch = Action { implicit request =>
-    session.get("connected").map { user =>
+    session.get(UserManager.SESSION_ID).map { user =>
       val url = host + "random"
       //    Async {
       //      WS.url(url).get().map { response =>
@@ -44,15 +45,15 @@ object NetworkConnector extends Controller {
       }
       Ok(views.html.main("Word", user)(Html(result.value.get.body)))
     }.getOrElse {
-      Unauthorized("You are unauthorized!")
+      Unauthorized(UserManager.UNAUTHORIZED_MSG)
     }
   }
 
   def add = Action { implicit request =>
-    session.get("connected").map {user =>
+    session.get(UserManager.SESSION_ID).map {user =>
       Ok(views.html.network.modifyDictionary(wordForm, user))
     }.getOrElse {
-      Unauthorized("You are unauthorized!")
+      Unauthorized(UserManager.UNAUTHORIZED_MSG)
     }
   }
 
